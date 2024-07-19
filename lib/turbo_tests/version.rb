@@ -1,3 +1,3 @@
 module TurboTests
-  VERSION = "1.4.1"
+  VERSION = "2.2.4"
 end
