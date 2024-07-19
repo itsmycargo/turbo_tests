@@ -16,7 +16,7 @@ module TurboTests
       runtime_log = nil
       verbose = false
       fail_fast = nil
-      exclude_pattern = nil
+      seed = nil
 
       OptionParser.new do |opts|
         opts.banner = <<~BANNER
@@ -82,7 +82,11 @@ module TurboTests
           end
           fail_fast = n.nil? || n < 1 ? 1 : n
         end
-      end.parse!(@argv)
+
+        opts.on("--seed SEED", "Seed for rspec") do |s|
+          seed = s
+        end
+      }.parse!(@argv)
 
       requires.each { |f| require(f) }
 
@@ -96,7 +100,8 @@ module TurboTests
       formatters.each do |formatter|
         formatter[:outputs] << '-' if formatter[:outputs].empty?
       end
-      success = TurboTests::Runner.run(
+
+      exitstatus = TurboTests::Runner.run(
         formatters: formatters,
         tags: tags,
         files: @argv.empty? ? ['spec'] : @argv,
@@ -104,14 +109,11 @@ module TurboTests
         verbose: verbose,
         fail_fast: fail_fast,
         count: count,
-        exclude_pattern: exclude_pattern
+        seed: seed
       )
 
-      if success
-        exit 0
-      else
-        exit 1
-      end
+      # From https://github.com/serpapi/turbo_tests/pull/20/
+      exit exitstatus
     end
   end
 end
