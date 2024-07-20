@@ -86,7 +86,7 @@ module TurboTests
         opts.on("--seed SEED", "Seed for rspec") do |s|
           seed = s
         end
-      }.parse!(@argv)
+      end.parse!(@argv)
 
       requires.each { |f| require(f) }
 
