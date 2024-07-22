@@ -13,6 +13,7 @@ module TurboTests
       files = opts[:files]
       formatters = opts[:formatters]
       tags = opts[:tags]
+      exclude_pattern = opts.fetch(:exclude_pattern, nil)
 
       start_time = opts.fetch(:start_time) { RSpec::Core::Time.now }
       runtime_log = opts.fetch(:runtime_log, nil)
@@ -32,6 +33,7 @@ module TurboTests
         reporter: reporter,
         files: files,
         tags: tags,
+        exclude_pattern: exclude_pattern,
         runtime_log: runtime_log,
         verbose: verbose,
         fail_fast: fail_fast,
@@ -45,6 +47,7 @@ module TurboTests
       @reporter = opts[:reporter]
       @files = opts[:files]
       @tags = opts[:tags]
+      @exclude_pattern = opts[:exclude_pattern]
       @runtime_log = opts[:runtime_log] || 'tmp/turbo_rspec_runtime.log'
       @verbose = opts[:verbose]
       @fail_fast = opts[:fail_fast]

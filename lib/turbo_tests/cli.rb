@@ -17,6 +17,7 @@ module TurboTests
       verbose = false
       fail_fast = nil
       seed = nil
+      exclude_pattern = nil
 
       OptionParser.new do |opts|
         opts.banner = <<~BANNER
@@ -109,7 +110,8 @@ module TurboTests
         verbose: verbose,
         fail_fast: fail_fast,
         count: count,
-        seed: seed
+        seed: seed,
+        exclude_pattern: exclude_pattern
       )
 
       # From https://github.com/serpapi/turbo_tests/pull/20/
