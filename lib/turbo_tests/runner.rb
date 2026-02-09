@@ -179,7 +179,9 @@ module TurboTests
 
         @threads <<
           Thread.new do
+            stdout.set_encoding("UTF-8", invalid: :replace, undef: :replace)
             stdout.each_line do |line|
+              line = line.encode("UTF-8", invalid: :replace, undef: :replace)
               result = line.split(env["RSPEC_FORMATTER_OUTPUT_ID"])
 
               output = result.shift
